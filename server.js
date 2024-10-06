@@ -298,7 +298,7 @@ app.get('/say', async (req, res) => {
     
     try {
         // Assuming your function is deployed on AWS Lambda
-        const response = await axios.get(`https://your-lambda-url.com`, {
+        const response = await axios.get(`https://qyoq672b18.execute-api.us-east-1.amazonaws.com/TestStage/`, {
             params: { keyword }
         });
         res.send(response.data);
