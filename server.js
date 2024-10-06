@@ -4,6 +4,7 @@ var mariadb = require('mariadb');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 var app = express();
 var port = 3000;
 
@@ -289,6 +290,23 @@ app.put('/companies/:id',async(req,res)=>{
  *          '200':
  *              description: A successful response
  */
+app.get('/say', async (req, res) => {
+    const keyword = req.query.keyword;
+    if (!keyword) {
+        return res.status(400).send('keyword query parameter is required');
+    }
+    
+    try {
+        // Assuming your function is deployed on AWS Lambda
+        const response = await axios.get(`https://your-lambda-url.com`, {
+            params: { keyword }
+        });
+        res.send(response.data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error forwarding the request');
+    }
+});
 
 app.patch('/companies/:id',async(req,res)=>{
   var conn;
